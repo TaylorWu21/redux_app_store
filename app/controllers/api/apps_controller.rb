@@ -32,7 +32,7 @@ class Api::AppsController < ApplicationController
 
   private
 
-    def :set_app
+    def set_app
       @app = App.find(params[:id])
     end
     

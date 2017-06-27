@@ -1,4 +1,4 @@
-import { GET_APPS, ADD_APP, UPDATE_APP, DELETE_APP } from '../actions/app';
+import { GET_APPS, ADD_APP, UPDATE_APP, DELETE_APP } from '../actions/apps';
 
 const apps = ( state = [], action ) => {
   switch(action.type) {

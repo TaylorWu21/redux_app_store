@@ -8,16 +8,25 @@ import {
   Header,
   Card,
   Image,
+  Dropdown,
+  Divider,
+  Button,
 } from 'semantic-ui-react';
 
 class Apps extends Component {
+  state = { category: '' }
 
   componentDidMount() {
     this.props.dispatch(getApps());
   }
 
   apps = () => {
-    return this.props.apps.map( app => {
+    const { apps } = this.props;
+    const { category } = this.state;
+    let visible = apps;
+    if(category)
+      visible = apps.filter(a => a.category === category);
+    return visible.map( app => {
       const { id, logo, name, author, category } = app;
       return(
         <Grid.Column key={id} computer={4} tablet={8}>
@@ -43,10 +52,35 @@ class Apps extends Component {
     });
   }
 
+  categoryOptions = () => {
+    const { categories } = this.props;
+    return categories.map( (c, i) => {
+      return {key: i, text: c, value: c}
+    });
+  }
+
   render() {
+    const { category } = this.state;
     return (
       <Container>
         <Header as='h3' textAlign='center'>Apps</Header>
+        <Dropdown
+          placeholder='Filter By Category'
+          fluid
+          selection
+          options={this.categoryOptions()}
+          onChange={ (e, data) => this.setState({ category: data.value}) }
+          value={category}
+        />
+        { category &&
+          <Button
+            fluid
+            basic
+            onClick={ () => this.setState({ category: '' }) }
+          >
+            Clear Filter: {category}
+          </Button>
+        }
         <Grid columns={16}>
           <Grid.Row>
             {this.apps()}
@@ -58,7 +92,9 @@ class Apps extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { apps: state.apps }
+  const apps = state.apps;
+  const categories = [...new Set(apps.map( a => a.category ))];
+  return { apps, categories }
 }
 
 export default connect(mapStateToProps)(Apps);

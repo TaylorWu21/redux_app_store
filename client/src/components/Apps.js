@@ -9,6 +9,7 @@ import {
   Image,
   Dropdown,
   Button,
+  Divider,
 } from 'semantic-ui-react';
 
 class Apps extends Component {
@@ -58,6 +59,9 @@ class Apps extends Component {
     return (
       <Container>
         <Header as='h3' textAlign='center'>Apps</Header>
+        <Divider />
+        <Button><Link to='apps/new'>Create New App</Link></Button>
+        <Divider />
         <Dropdown
           placeholder='Filter By Category'
           fluid
@@ -75,6 +79,7 @@ class Apps extends Component {
             Clear Filter: {category}
           </Button>
         }
+        <Divider />
         <Grid columns={16}>
           <Grid.Row>
             {this.apps()}

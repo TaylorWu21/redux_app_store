@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
-import Apps from './Apps';
-import AppView from './AppView';
+import { Route, Switch } from 'react-router-dom';
 import { getApps } from '../actions/apps';
 import { Loader, Segment, Dimmer } from 'semantic-ui-react';
+
+import Apps from './Apps';
+import AppView from './AppView';
+import AppForm from './AppForm';
 
 class FetchApps extends Component {
   state = { loaded: false }
@@ -21,10 +23,12 @@ class FetchApps extends Component {
     let { loaded } = this.state;
     if (loaded) {
       return (
-        <div>
+        <Switch>
           <Route exact path="/apps" component={Apps} />
+          <Route exact path="/apps/new" component={AppForm} />
+          <Route exact path="/apps/edit/:id" component={AppForm} />
           <Route exact path="/apps/:id" component={AppView} />
-        </div>
+        </Switch>
       )
     } else {
       return (

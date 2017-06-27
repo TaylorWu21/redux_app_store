@@ -1,23 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, Image, Container, Table } from 'semantic-ui-react';
+import { Header, Image, Container, Table, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { deleteApp } from '../actions/apps';
 
-
-const AppView = ({ app = {} }) => {
+const AppView = ({ app = {}, dispatch, history }) => {
   return (
     <Container>
       <Link to="/apps">View All Apps</Link>
       <Header as="h3" textAlign="center">{app.name}</Header>
       <Image src={app.logo} />
       <Table definition>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell />
-          </Table.Row>
-        </Table.Header>
         <Table.Body>
+          <Table.Row>
+            <Table.Cell>Actions</Table.Cell>
+            <Table.Cell>
+              <Button color='orange'><Link to={`/apps/edit/${app.id}`}>Update</Link></Button>
+              <Button 
+                color='red' 
+                onClick={ () => {
+                  dispatch(deleteApp(app.id));
+                  history.push('/apps');
+                } }
+              >
+                Delete
+              </Button>
+            </Table.Cell>
+          </Table.Row>
           <Table.Row>
             <Table.Cell>Description</Table.Cell>
             <Table.Cell>{app.description}</Table.Cell>
@@ -42,10 +51,10 @@ const AppView = ({ app = {} }) => {
       </Table>
     </Container>
   );
-};
+}
 
 const mapStateToProps = (state, props) => {
-  return { app: state.apps.find( a => a.id === parseInt(props.match.params.id )) }
+  return { app: state.apps.find(a => a.id === parseInt(props.match.params.id, 10)) }
 }
 
 export default connect(mapStateToProps)(AppView);

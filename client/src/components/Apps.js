@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getApps } from '../actions/apps';
 import {
   Container,
   Grid,
@@ -9,16 +8,11 @@ import {
   Card,
   Image,
   Dropdown,
-  Divider,
   Button,
 } from 'semantic-ui-react';
 
 class Apps extends Component {
   state = { category: '' }
-
-  componentDidMount() {
-    this.props.dispatch(getApps());
-  }
 
   apps = () => {
     const { apps } = this.props;

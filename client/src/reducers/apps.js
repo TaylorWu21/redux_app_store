@@ -1,6 +1,6 @@
 import { GET_APPS, ADD_APP, UPDATE_APP, DELETE_APP } from '../actions/app';
 
-const apps = (state = [], action) => {
+const apps = ( state = [], action ) => {
   switch(action.type) {
     case GET_APPS:
       return action.apps

@@ -11,9 +11,12 @@ import {
   Button,
   Divider,
 } from 'semantic-ui-react';
+import InfiniteScroll from 'react-infinite-scroller';
+
+import { getApps } from '../actions/apps';
 
 class Apps extends Component {
-  state = { category: '' }
+  state = { category: '', hasMore: true }
 
   apps = () => {
     const { apps } = this.props;
@@ -54,8 +57,18 @@ class Apps extends Component {
     });
   }
 
+  getNextPage = (e) => {
+    const { pagination, dispatch } = this.props;
+    if(pagination.totalPages) {
+      if(e <= pagination.totalPages)
+        dispatch(getApps(e));
+      else
+        this.setState({ hasMore: false });
+    }
+  }
+
   render() {
-    const { category } = this.state;
+    const { category, hasMore } = this.state;
     return (
       <Container>
         <Header as='h3' textAlign='center'>Apps</Header>
@@ -80,20 +93,30 @@ class Apps extends Component {
           </Button>
         }
         <Divider />
-        <Grid columns={16}>
-          <Grid.Row>
-            {this.apps()}
-          </Grid.Row>
-        </Grid>
+          <div style={{ height: '700px', overflow: 'auto' }}>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.getNextPage}
+              hasMore={hasMore}
+              loader={<div className="loader">Loading ...</div>}
+              useWindow={false}
+            >
+            <Grid columns={16}>
+              <Grid.Row>
+                  {this.apps()}
+              </Grid.Row>
+            </Grid>
+          </InfiniteScroll>
+        </div>
       </Container>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const apps = state.apps;
+  const { apps, pagination } = state.apps;
   const categories = [...new Set(apps.map( a => a.category ))];
-  return { apps, categories }
+  return { apps, categories, pagination }
 }
 
 export default connect(mapStateToProps)(Apps);

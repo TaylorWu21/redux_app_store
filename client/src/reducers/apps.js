@@ -1,19 +1,20 @@
 import { GET_APPS, ADD_APP, UPDATE_APP, DELETE_APP } from '../actions/apps';
 
-const apps = ( state = [], action ) => {
+const apps = ( state = { apps: [], pagination: {} }, action ) => {
   switch(action.type) {
     case GET_APPS:
-      return action.apps
+      return { apps: [...state.apps, ...action.apps], pagination: action.pagination }
     case ADD_APP:
-      return [action.app, ...state]
+      return { apps: [action.app, ...state], pagination: state.pagination }
     case UPDATE_APP:
-      return state.map( a => {
+      let apps = state.map( a => {
         if (a.id === action.app.id)
           return action.app
         return a
-      })
+      });
+      return { apps, pagination: state.pagination }
     case DELETE_APP:
-      return state.filter( a => a.id !== action.id )
+      return { apps: state.filter( a => a.id !== action.id ), pagination: state.pagination }
     default:
       return state;
   }

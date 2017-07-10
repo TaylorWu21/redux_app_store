@@ -4,7 +4,7 @@ import { Header, Image, Container, Table, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { deleteApp } from '../actions/apps';
 
-const AppView = ({ app = {}, dispatch, history }) => {
+const AppView = ({ app = {}, dispatch, history }) => {  
   return (
     <Container>
       <Link to="/apps">View All Apps</Link>
@@ -21,7 +21,7 @@ const AppView = ({ app = {}, dispatch, history }) => {
                 onClick={ () => {
                   dispatch(deleteApp(app.id));
                   history.push('/apps');
-                } }
+                }}
               >
                 Delete
               </Button>

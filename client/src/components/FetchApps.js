@@ -9,19 +9,13 @@ import AppView from './AppView';
 import AppForm from './AppForm';
 
 class FetchApps extends Component {
-  state = { loaded: false }
 
   componentDidMount() {
-    this.props.dispatch(getApps(this.setLoaded))
-  }
-
-  setLoaded = () => {
-    this.setState({ loaded: true });
+    this.props.dispatch(getApps())
   }
 
   render() {
-    let { loaded } = this.state;
-    if (loaded) {
+    if (this.props.apps) {
       return (
         <Switch>
           <Route exact path="/apps" component={Apps} />
@@ -42,4 +36,8 @@ class FetchApps extends Component {
   }
 }
 
-export default connect()(FetchApps);
+const mapStateToProps = (state) => (
+  { apps: state.apps }
+)
+
+export default connect(mapStateToProps)(FetchApps);

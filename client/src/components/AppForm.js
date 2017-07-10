@@ -122,9 +122,12 @@ class AppForm extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const categories = [...new Set(state.apps.map( a => a.category ))];
+  const categories = [...new Set(state.apps.apps.map( a => a.category ))];
   if(props.match.params.id)
-    return {  app: state.apps.find(a => a.id === parseInt(props.match.params.id, 10)), categories }
+    return {  
+      app: state.apps.apps.find(a => a.id === parseInt(props.match.params.id, 10)), 
+      categories 
+    }
   return { categories }
 }
 

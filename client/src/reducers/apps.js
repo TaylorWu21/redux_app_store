@@ -7,14 +7,14 @@ const apps = ( state = { apps: [], pagination: {} }, action ) => {
     case ADD_APP:
       return { apps: [action.app, ...state], pagination: state.pagination }
     case UPDATE_APP:
-      let apps = state.map( a => {
+      let apps = state.apps.map( a => {
         if (a.id === action.app.id)
           return action.app
         return a
       });
       return { apps, pagination: state.pagination }
     case DELETE_APP:
-      return { apps: state.filter( a => a.id !== action.id ), pagination: state.pagination }
+      return { apps: state.apps.filter( a => a.id !== action.id ), pagination: state.pagination }
     default:
       return state;
   }

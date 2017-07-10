@@ -11,8 +11,6 @@ export const getApps = (page = 1) => {
       .then( res => {
         const { data: apps, headers } = res;
         const totalPages = Math.ceil(headers['x-total'] / headers['x-per-page']);
-        console.log(totalPages);
-        console.log(headers);
         dispatch({ type: GET_APPS, apps, pagination: { totalPages }, headers }) 
       });
   }

@@ -24,6 +24,10 @@ gem 'puma', '~> 3.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
+# Will Paginate
+gem 'will_paginate'
+# Api Pagination - Relies on Will Paginate
+gem 'api-pagination'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

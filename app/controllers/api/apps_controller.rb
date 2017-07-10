@@ -2,7 +2,8 @@ class Api::AppsController < ApplicationController
   before_action :set_app, only: [:show, :update, :destroy]
 
   def index
-    render json: App.all.order(created_at: :desc)
+    apps = App.all.order(created_at: :desc)
+    paginate json: apps, per_page: 10
   end
 
   def show
